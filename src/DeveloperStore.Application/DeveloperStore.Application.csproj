@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.0.1" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DeveloperStore.Domain\DeveloperStore.Domain.csproj" />
     <ProjectReference Include="..\DeveloperStore.Infrastructure\DeveloperStore.Infrastructure.csproj" />
   </ItemGroup>
