@@ -69,3 +69,4 @@ nunit-*.xml
 /.vs/DeveloperStore/v17/.suo
 /.vs/DeveloperStore/v17/DocumentLayout.backup.json
 /.vs/DeveloperStore/v17/DocumentLayout.json
+*.vsidx
