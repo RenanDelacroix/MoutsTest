@@ -1,6 +1,9 @@
-﻿namespace DeveloperStore.Application.DTOs
+﻿using DeveloperStore.Application.DTOs;
+using MediatR;
+
+namespace DeveloperStore.Application.Commands.Sales
 {
-    public class CreateSaleDto
+    public class CreateSaleCommand : IRequest<Guid>
     {
         public string Number { get; set; } = null!;
         public Guid CustomerId { get; set; }
