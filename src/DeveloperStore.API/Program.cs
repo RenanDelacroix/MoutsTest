@@ -1,12 +1,8 @@
-using AutoMapper;
-using DeveloperStore.CrossCutting.Mappers;
-using DeveloperStore.Domain.Interfaces;
 using DeveloperStore.Infrastructure.Context;
-using DeveloperStore.Infrastructure.Repositories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Rebus.Config;
 using Rebus.Transport.InMem;
+using DeveloperStore.CrossCutting.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,33 +13,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ServiceFactory>(sp => type => sp.GetRequiredService(type));
-builder.Services.AddSingleton<IMediator, Mediator>();
-
-// Register MediatR handlers
-
-//Automaper
-builder.Services.AddSingleton<IMapper>(sp =>
-{
-    var config = new MapperConfiguration(cfg =>
-    {
-        cfg.AddProfile<MappingProfile>();
-    });
-
-    return config.CreateMapper();
-});
-
-
 //Rebus
 builder.Services.AddRebus(configure => configure
     .Transport(t => t.UseInMemoryTransport(new InMemNetwork(), "developerstore-queue")));
 
-// Registro de Repositories
-
+// Registro de Coneto do banco de dados
 builder.Services.AddDbContext<SalesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 var app = builder.Build();
 
