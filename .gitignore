@@ -72,3 +72,4 @@ nunit-*.xml
 *.vsidx
 /.vs/DeveloperStore/v17/TestStore/0/000.testlog
 /.vs/DeveloperStore/v17/TestStore/0/testlog.manifest
+*.testlog
