@@ -20,7 +20,7 @@ namespace DeveloperStore.Infrastructure.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<Product> GetByIdAsync(Guid productId, CancellationToken cancellationToken)
+        public async Task<Product?> GetByIdAsync(Guid productId, CancellationToken cancellationToken)
         {
             return await _context.Products.FirstOrDefaultAsync(s => s.Id == productId, cancellationToken);
         }
