@@ -19,5 +19,13 @@ namespace DeveloperStore.Domain.Entities
             var itemsTotal = Items.Sum(item => item.Subtotal);
             return itemsTotal - Discount;
         }
+        public void Cancel()
+        {
+            if (Status != SaleStatus.Created)
+                throw new InvalidOperationException("Only sales in 'Created' status can be cancelled.");
+
+            Status = SaleStatus.Cancelled;
+        }
+
     }
 }
