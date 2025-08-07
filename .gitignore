@@ -76,3 +76,9 @@ nunit-*.xml
 /.vs/ProjectEvaluation/developerstore.metadata.v9.bin
 /.vs/ProjectEvaluation/developerstore.projects.v9.bin
 /.vs/ProjectEvaluation/developerstore.strings.v9.bin
+/src/DeveloperStore.Website/.vscode/extensions.json
+/src/DeveloperStore.Website/.vscode/launch.json
+/src/DeveloperStore.Website/.vscode/tasks.json
+/src/DeveloperStore.Website/.vscode/extensions.json
+/src/DeveloperStore.Website/.vscode/launch.json
+/src/DeveloperStore.Website/.vscode/tasks.json
