@@ -16,7 +16,8 @@ public class MappingProfile : Profile
         CreateMap<CreateSaleCommand, Sale>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
-            .ForMember(dest => dest.Total, opt => opt.Ignore()) // Já é calculado na entidade
+            .ForMember(dest => dest.Number, opt => opt.Ignore()) // será gerado
+            .ForMember(dest => dest.Discount, opt => opt.Ignore()) // calculado
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
     }
 }

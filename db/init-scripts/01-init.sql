@@ -11,7 +11,8 @@ CREATE TABLE sales (
 
 -- Itens da Venda (com FK e deleção em cascata)
 CREATE TABLE saleitem (
-    productid UUID PRIMARY KEY,
+    id SERIAL PRIMARY KEY, -- Novo campo de ID
+    productid UUID NOT NULL,
     saleid UUID NOT NULL,
     quantity INTEGER NOT NULL,
     unitprice DECIMAL(18,2) NOT NULL,

@@ -5,7 +5,6 @@ using DeveloperStore.Domain.Entities;
 using DeveloperStore.Domain.Interfaces;
 using MediatR;
 
-
 namespace DeveloperStore.Application.Handlers.Sales;
 
 public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>

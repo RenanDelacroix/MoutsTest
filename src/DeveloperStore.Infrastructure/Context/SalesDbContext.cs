@@ -24,22 +24,24 @@ public class SalesDbContext : DbContext
             entity.Property(s => s.Status).HasColumnName("status").HasConversion<string>();
             entity.Property(s => s.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
             entity.Ignore(s => s.Total);
-
-            entity.HasMany(s => s.Items)
-                  .WithOne()
-                  .HasForeignKey("saleid")  
-                  .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<SaleItem>(entity =>
         {
             entity.ToTable("saleitem");
 
-            entity.HasKey(i => i.ProductId);
+            entity.HasKey(i => i.Id);
+            entity.Property(i => i.Id).HasColumnName("id");
             entity.Property(i => i.ProductId).HasColumnName("productid");
+            entity.Property(i => i.SaleId).HasColumnName("saleid");
             entity.Property(i => i.Quantity).HasColumnName("quantity");
             entity.Property(i => i.UnitPrice).HasColumnName("unitprice").HasColumnType("decimal(18,2)");
             entity.Property(i => i.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
+
+            entity.HasOne<Sale>()
+                  .WithMany(s => s.Items)
+                  .HasForeignKey(i => i.SaleId)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }
