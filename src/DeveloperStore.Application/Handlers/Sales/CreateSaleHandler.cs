@@ -10,17 +10,38 @@ namespace DeveloperStore.Application.Handlers.Sales;
 public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
 {
     private readonly ISaleRepository _saleRepository;
+    private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
 
-    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper)
+    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper, IProductRepository productRepository)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
+        _productRepository = productRepository;
     }
 
     public async Task<Guid> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
     {
-        var sale = _mapper.Map<Sale>(request);
+        var sale = new Sale
+        {
+            CustomerId = request.CustomerId,
+            BranchId = request.BranchId,
+            Items = new List<SaleItem>()
+        };
+
+        foreach (var itemDto in request.Items)
+        {
+            var product = await _productRepository.GetByIdAsync(itemDto.ProductId, cancellationToken);
+            if (product == null)
+                throw new InvalidOperationException($"Product {itemDto.ProductId} not found.");
+
+            sale.Items.Add(new SaleItem
+            {
+                ProductId = itemDto.ProductId,
+                Quantity = itemDto.Quantity,
+                UnitPrice = product.Price 
+            });
+        }
 
         sale.ApplyDiscountRules();
 
