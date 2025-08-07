@@ -8,6 +8,7 @@ public class SalesDbContext : DbContext
     public SalesDbContext(DbContextOptions<SalesDbContext> options) : base(options) { }
 
     public DbSet<Sale> Sales => Set<Sale>();
+    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,6 +43,15 @@ public class SalesDbContext : DbContext
                   .WithMany(s => s.Items)
                   .HasForeignKey(i => i.SaleId)
                   .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.ToTable("products");
+            entity.HasKey(p => p.Id);
+            entity.Property(p => p.Id).HasColumnName("id");
+            entity.Property(p => p.Name).HasColumnName("name").IsRequired();
+            entity.Property(p => p.Price).HasColumnName("price").HasColumnType("decimal(18,2)");
         });
     }
 }

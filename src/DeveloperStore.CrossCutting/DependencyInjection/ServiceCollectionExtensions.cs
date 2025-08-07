@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ISaleRepository, SaleRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
 
         services.AddSingleton<IEventPublisher, MongoEventPublisher>();
 

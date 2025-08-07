@@ -19,8 +19,17 @@ public class SaleController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateSaleCommand command)
     {
-        var saleId = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = saleId }, new { id = saleId });
+        try
+        {
+            var saleId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetById), new { id = saleId }, new { id = saleId });
+        }
+        catch (InvalidOperationException ex)
+        {
+
+            return BadRequest($"{ex.Message}");
+        }
+        
     }
 
     [HttpGet("{id}")]
