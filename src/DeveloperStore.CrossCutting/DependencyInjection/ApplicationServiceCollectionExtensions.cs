@@ -10,8 +10,8 @@ public static class ApplicationServiceCollectionExtensions
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         // MediatR
-        services.AddSingleton<ServiceFactory>(sp => type => sp.GetRequiredService(type));
-        services.AddSingleton<IMediator, Mediator>();
+        services.AddScoped<ServiceFactory>(sp => type => sp.GetRequiredService(type));
+        services.AddScoped<IMediator, Mediator>();
 
         services.Scan(scan => scan
             .FromAssemblies(Assembly.Load("DeveloperStore.Application"))

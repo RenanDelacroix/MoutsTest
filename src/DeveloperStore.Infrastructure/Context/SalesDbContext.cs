@@ -16,7 +16,7 @@ public class SalesDbContext : DbContext
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Number).IsRequired();
             entity.Property(s => s.Discount).HasColumnType("decimal(18,2)");
-            entity.Property(s => s.Total).HasColumnType("decimal(18,2)");
+            entity.Ignore(s => s.Total);
             entity.Property(s => s.Status).HasConversion<string>();
             entity.HasMany(s => s.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
         });
