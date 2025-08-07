@@ -10,10 +10,12 @@ namespace DeveloperStore.API.Controllers;
 public class SaleController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger<SaleController> _logger;
 
-    public SaleController(IMediator mediator)
+    public SaleController(IMediator mediator, ILogger<SaleController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [HttpPost]
@@ -21,12 +23,14 @@ public class SaleController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Received CreateSaleCommand for CustomerId: {CustomerId}", command.CustomerId);
             var saleId = await _mediator.Send(command);
+            _logger.LogInformation("Sale created with ID: {SaleId}", saleId);
             return CreatedAtAction(nameof(GetById), new { id = saleId }, new { id = saleId });
         }
         catch (InvalidOperationException ex)
         {
-
+            _logger.LogWarning(ex, "Validation failed during sale creation.");
             return BadRequest($"{ex.Message}");
         }
         
@@ -72,15 +76,19 @@ public class SaleController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("Attempting to cancel sale with ID: {SaleId}", id);
             await _mediator.Send(new CancelSaleCommand(id));
+            _logger.LogInformation("Successfully canceled sale with ID: {SaleId}", id);
             return Ok(new { message = $"Sale with ID {id} was canceled." });
         }
         catch (KeyNotFoundException)
         {
+            _logger.LogWarning("Sale not found: {SaleId}", id);
             return NotFound(new { message = $"Sale {id} not found." });
         }
         catch (InvalidOperationException ex)
         {
+            _logger.LogWarning(ex, "Failed to cancel sale with ID: {SaleId}", id);
             return BadRequest(new { message = ex.Message });
         }
     }
