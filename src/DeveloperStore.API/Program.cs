@@ -1,8 +1,10 @@
+using DeveloperStore.CrossCutting;
+using DeveloperStore.CrossCutting.DependencyInjection;
+using DeveloperStore.Domain.Enums;
 using DeveloperStore.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Rebus.Config;
 using Rebus.Transport.InMem;
-using DeveloperStore.CrossCutting.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,12 @@ builder.Services.AddRebus(configure => configure
 // Registro de Coneto do banco de dados
 builder.Services.AddDbContext<SalesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DisplayEnumConverter<SaleStatus>());
+    });
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();

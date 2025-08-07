@@ -1,4 +1,5 @@
 ﻿using DeveloperStore.Application.Commands.Sales;
+using DeveloperStore.Application.Queries.Sales;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,25 +16,24 @@ public class SaleController : ControllerBase
         _mediator = mediator;
     }
 
-    /// <summary>
-    /// Cria uma nova venda
-    /// </summary>
-    /// <param name="command">Dados da venda</param>
-    /// <returns>Id da venda criada</returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateSaleCommand command)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
         var saleId = await _mediator.Send(command);
         return CreatedAtAction(nameof(GetById), new { id = saleId }, new { id = saleId });
     }
 
-    // Stub para retorno de CreatedAtAction
     [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
-        return Ok(new { Result = "1, 2, 3"}); //TODO implementar lógica para buscar a venda por ID depois
+        try
+        {
+            var result = await _mediator.Send(new GetSaleByIdQuery(id));
+            return Ok(result);
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound(new { message = $"Sale with ID {id} not found." });
+        }
     }
 }
