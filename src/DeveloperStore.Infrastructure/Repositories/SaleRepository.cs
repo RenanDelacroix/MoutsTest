@@ -49,4 +49,12 @@ public class SaleRepository : ISaleRepository
             await _context.SaveChangesAsync(cancellationToken);
         }
     }
+
+    public Task<IQueryable<Sale>> QueryAsync(CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult(_context.Sales
+            .Include(s => s.Items)
+            .AsNoTracking()
+            .AsQueryable());
+    }
 }

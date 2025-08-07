@@ -36,4 +36,25 @@ public class SaleController : ControllerBase
             return NotFound(new { message = $"Sale with ID {id} not found." });
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll(
+    [FromQuery] string? number,
+    [FromQuery] string? orderBy = "createdAt",
+    [FromQuery] string? direction = "desc",
+    [FromQuery] int pageNumber = 1,
+    [FromQuery] int pageSize = 10)
+    {
+        var query = new GetSalesQuery
+        {
+            Number = number,
+            OrderBy = orderBy,
+            Direction = direction,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
+
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
 }
