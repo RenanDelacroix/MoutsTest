@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./src
+      dockerfile: DeveloperStore.API/Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - mongo
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__MongoDb=mongodb://mongo:27017
+      - ConnectionStrings__DefaultConnection=Host=postgres;Database=developerstore;Username=postgres;Password=postgres
+
+  mongo:
+    image: mongo
+    container_name: developerstore_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
