@@ -73,3 +73,6 @@ nunit-*.xml
 /.vs/DeveloperStore/v17/TestStore/0/000.testlog
 /.vs/DeveloperStore/v17/TestStore/0/testlog.manifest
 *.testlog
+/.vs/ProjectEvaluation/developerstore.metadata.v9.bin
+/.vs/ProjectEvaluation/developerstore.projects.v9.bin
+/.vs/ProjectEvaluation/developerstore.strings.v9.bin
