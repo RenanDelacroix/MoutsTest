@@ -64,7 +64,7 @@ public class SaleController : ControllerBase
         try
         {
             await _mediator.Send(new CancelSaleCommand(id));
-            return NoContent();
+            return Ok(new { message = $"Sale with ID {id} was canceled." });
         }
         catch (KeyNotFoundException)
         {

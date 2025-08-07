@@ -10,6 +10,8 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         CreateMap<CreateSaleItemDto, SaleItem>();
+        CreateMap<Sale, SaleDto>();
+        CreateMap<SaleItem, SaleItemDto>();
 
         CreateMap<CreateSaleCommand, Sale>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))

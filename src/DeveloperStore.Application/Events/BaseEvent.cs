@@ -2,6 +2,6 @@
 
 public abstract class BaseEvent : IEvent
 {
-    public DateTime OccurredAt { get; } = DateTime.UtcNow;
+    public DateTime OccurredAt { get; } = DateTime.Now;
     public string EventType => GetType().Name;
 }

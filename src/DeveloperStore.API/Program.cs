@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -19,7 +18,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddRebus(configure => configure
     .Transport(t => t.UseInMemoryTransport(new InMemNetwork(), "developerstore-queue")));
 
-// Registro de Coneto do banco de dados
+// Registro de Contexto do banco de dados
 builder.Services.AddDbContext<SalesDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 

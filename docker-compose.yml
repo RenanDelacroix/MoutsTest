@@ -9,6 +9,7 @@ services:
       - "5000:8080"
     depends_on:
       - mongo
+      - postgres
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__MongoDb=mongodb://mongo:27017
@@ -22,5 +23,19 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  postgres:
+    image: postgres:16
+    container_name: developerstore_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: developerstore
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init-scripts:/docker-entrypoint-initdb.d  # Executa os scripts SQL
+
 volumes:
   mongo_data:
+  postgres_data:

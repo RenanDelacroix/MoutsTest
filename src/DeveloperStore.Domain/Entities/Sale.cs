@@ -25,6 +25,7 @@ namespace DeveloperStore.Domain.Entities
                 throw new InvalidOperationException("Only sales in 'Created' status can be cancelled.");
 
             Status = SaleStatus.Cancelled;
+            CreatedAt = CreatedAt.ToUniversalTime();
         }
 
         public void ApplyDiscountRules()

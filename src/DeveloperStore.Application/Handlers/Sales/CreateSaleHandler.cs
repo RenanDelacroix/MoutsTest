@@ -12,13 +12,11 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
-    private readonly IEventPublisher _eventPublisher;
 
-    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper, IEventPublisher eventPublisher)
+    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
-        _eventPublisher = eventPublisher;
     }
 
     public async Task<Guid> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
@@ -27,14 +25,7 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
 
         sale.ApplyDiscountRules();
 
-        //TODO Persistencia temporária, a real vai ser feita depois
         await _saleRepository.AddAsync(sale);
-
-        await _eventPublisher.PublishAsync(new SaleCreatedEvent
-        {
-            SaleId = sale.Id,
-            Number = sale.Number
-        });
 
         return sale.Id;
     }

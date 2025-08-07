@@ -13,19 +13,33 @@ public class SalesDbContext : DbContext
     {
         modelBuilder.Entity<Sale>(entity =>
         {
+            entity.ToTable("sales");
+
             entity.HasKey(s => s.Id);
-            entity.Property(s => s.Number).IsRequired();
-            entity.Property(s => s.Discount).HasColumnType("decimal(18,2)");
+            entity.Property(s => s.Id).HasColumnName("id");
+            entity.Property(s => s.Number).HasColumnName("number").IsRequired();
+            entity.Property(s => s.CustomerId).HasColumnName("customerid");
+            entity.Property(s => s.BranchId).HasColumnName("branchid");
+            entity.Property(s => s.CreatedAt).HasColumnName("createdat");
+            entity.Property(s => s.Status).HasColumnName("status").HasConversion<string>();
+            entity.Property(s => s.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
             entity.Ignore(s => s.Total);
-            entity.Property(s => s.Status).HasConversion<string>();
-            entity.HasMany(s => s.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(s => s.Items)
+                  .WithOne()
+                  .HasForeignKey("saleid")  
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<SaleItem>(entity =>
         {
-            entity.HasKey(nameof(SaleItem.ProductId));
-            entity.Property(i => i.UnitPrice).HasColumnType("decimal(18,2)");
-            entity.Property(i => i.Discount).HasColumnType("decimal(18,2)");
+            entity.ToTable("saleitem");
+
+            entity.HasKey(i => i.ProductId);
+            entity.Property(i => i.ProductId).HasColumnName("productid");
+            entity.Property(i => i.Quantity).HasColumnName("quantity");
+            entity.Property(i => i.UnitPrice).HasColumnName("unitprice").HasColumnType("decimal(18,2)");
+            entity.Property(i => i.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
         });
     }
 }
