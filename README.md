@@ -11,7 +11,7 @@ Antes de iniciar, você precisa ter instalado no seu computador:
 
 **Docker** — última versão instalada e configurada corretamente
 
-🚀 **Executando a aplicação**
+🚀 **Executando a aplicação**  *Rodando em localhost:5000*
 
 No terminal, navegue até a pasta raiz do projeto e execute:
 
