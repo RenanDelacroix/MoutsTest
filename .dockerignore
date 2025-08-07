@@ -1,0 +1,30 @@
+# Arquivos e pastas padrão
+**/.classpath
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.project
+**/.settings
+**/.toolstarget
+**/.vs
+**/.vscode
+**/*.user
+**/*.suo
+
+# Diretórios de build
+**/bin/
+**/obj/
+**/TestResults/
+
+# Arquivos do sistema
+**/Thumbs.db
+**/desktop.ini
+
+# Node ou frontend (se tiver futuramente)
+**/node_modules/
+
+# Outros
+*.md
+*.log
+*.db
