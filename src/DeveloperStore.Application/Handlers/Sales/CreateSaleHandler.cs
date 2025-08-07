@@ -21,6 +21,8 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
     {
         var sale = _mapper.Map<Sale>(request);
 
+        sale.ApplyDiscountRules();
+
         //TODO Persistencia temporária, a real vai ser feita depois
         await _saleRepository.AddAsync(sale);
 

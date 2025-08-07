@@ -27,5 +27,32 @@ namespace DeveloperStore.Domain.Entities
             Status = SaleStatus.Cancelled;
         }
 
+        public void ApplyDiscountRules()
+        {
+            foreach (var item in Items)
+            {
+                // Validação: limite máximo por produto
+                if (item.Quantity > 20)
+                    throw new InvalidOperationException($"Product {item.ProductId} exceeds the maximum allowed quantity (20).");
+
+                // Regra: sem desconto abaixo de 4
+                if (item.Quantity < 4)
+                {
+                    if (item.Discount > 0)
+                        throw new InvalidOperationException($"Product {item.ProductId} cannot have a discount with less than 4 items.");
+
+                    continue;
+                }
+
+                // Regra de desconto baseado na quantidade
+                var calculatedDiscount = item.UnitPrice * item.Quantity * (
+                    item.Quantity < 10 ? 0.10m : 0.20m
+                );
+
+                item.Discount = calculatedDiscount;
+            }
+        }
+
+
     }
 }
