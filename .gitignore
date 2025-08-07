@@ -82,3 +82,6 @@ nunit-*.xml
 /src/DeveloperStore.Website/.vscode/extensions.json
 /src/DeveloperStore.Website/.vscode/launch.json
 /src/DeveloperStore.Website/.vscode/tasks.json
+/src/DeveloperStore.Website/.vscode/extensions.json
+/src/DeveloperStore.Website/.vscode/launch.json
+/src/DeveloperStore.Website/.vscode/tasks.json

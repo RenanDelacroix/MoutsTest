@@ -1,0 +1,21 @@
+<h2>Vendas</h2>
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+      <th>Número</th>
+      <th>Cliente</th>
+      <th>Filial</th>
+      <th>Total</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let sale of sales">
+      <td>{{ sale.number }}</td>
+      <td>{{ sale.customerId }}</td>
+      <td>{{ sale.branchId }}</td>
+      <td>{{ sale.total | currency: 'BRL' }}</td>
+      <td>{{ sale.status }}</td>
+    </tr>
+  </tbody>
+</table>
