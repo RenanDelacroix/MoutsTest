@@ -5,17 +5,23 @@
       <th>Número</th>
       <th>Cliente</th>
       <th>Filial</th>
+      <th>Total sem desconto</th>
+      <th>Desconto</th>
       <th>Total</th>
       <th>Status</th>
+      <th>Data de criação</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let sale of sales">
       <td>{{ sale.number }}</td>
-      <td>{{ sale.customerName }}</td>
+      <td>{{ userService.userName }}</td>
       <td>{{ sale.branchName }}</td>
       <td>{{ sale.total | currency: 'BRL' }}</td>
+      <td>{{ sale.discount | currency: 'BRL' }}</td>
+      <td>{{ sale.totalComDesconto | currency: 'BRL' }}</td>
       <td>{{ sale.status }}</td>
+      <td>{{ sale.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
     </tr>
   </tbody>
 </table>

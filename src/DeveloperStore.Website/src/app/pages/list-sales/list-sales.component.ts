@@ -13,7 +13,7 @@ export class ListSalesComponent implements OnInit {
 
   constructor(
     private saleService: SaleService,
-    private userService: UserService
+    public userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -26,8 +26,7 @@ export class ListSalesComponent implements OnInit {
       next: (data) => {
         this.sales = data.items.map((sale: any) => ({
           ...sale,
-          branchName: sale.branchName || (sale.branch ? sale.branch.name : ''),
-          customerName: this.userName // sempre o mesmo usuário fixo
+          totalComDesconto: sale.total - sale.discount
         }));
         this.totalCount = data.totalCount;
       },
