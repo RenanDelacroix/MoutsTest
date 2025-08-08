@@ -28,7 +28,7 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
         {
             CustomerId = request.CustomerId,
             BranchId = request.BranchId,
-            Items = new List<SaleItem>(),
+            Items = new List<SaleItem>()
         };
 
         foreach (var itemDto in request.Items)

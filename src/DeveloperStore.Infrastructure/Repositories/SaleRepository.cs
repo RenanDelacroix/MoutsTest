@@ -16,9 +16,17 @@ public class SaleRepository : ISaleRepository
 
     public async Task AddAsync(Sale sale, CancellationToken cancellationToken = default)
     {
-        _context.Entry(sale.Branch).State = EntityState.Detached;
-        await _context.Sales.AddAsync(sale, cancellationToken);
-        await _context.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _context.Sales.AddAsync(sale, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+
+            throw new Exception($"{ex.Message}");
+        }
+        
     }
 
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

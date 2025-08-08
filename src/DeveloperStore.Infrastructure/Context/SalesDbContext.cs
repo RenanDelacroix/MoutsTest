@@ -1,5 +1,7 @@
 ﻿using DeveloperStore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
 
 namespace DeveloperStore.Infrastructure.Context;
 
@@ -26,6 +28,7 @@ public class SalesDbContext : DbContext
             entity.Property(s => s.Status).HasColumnName("status").HasConversion<string>();
             entity.Property(s => s.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
             entity.Ignore(s => s.Total);
+            entity.Ignore(s => s.BranchName);
 
             entity.HasOne(s => s.Branch)
                   .WithMany()

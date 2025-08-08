@@ -12,7 +12,7 @@ namespace DeveloperStore.Domain.Entities
         public SaleStatus Status { get; set; } = SaleStatus.Created;
         public decimal Discount { get; set; }
         public List<SaleItem> Items { get; set; } = new();
-        public Branch Branch { get; set; } = new();
+        public Branch Branch { get; set; }
         public string BranchName => Branch.Name;
         public decimal Total => CalculateTotal();
 

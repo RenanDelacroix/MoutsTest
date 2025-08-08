@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { BranchService } from 'src/app/services/branch.service';
 import { ProductService } from 'src/app/services/product.service';
+import { SaleService } from 'src/app/services/sale.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-create-sale',
   templateUrl: './create-sale.component.html'
 })
-
-// ID fixo de usuário (Renan Leme)
 export class CreateSaleComponent implements OnInit {
   sale: any = {
-    customerId: '',   //ID fixo injetado
+    customerId: '',
     branchId: '',
     items: [{ productId: '', quantity: 1 }]
   };
@@ -22,13 +21,16 @@ export class CreateSaleComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private branchService: BranchService,
+    private saleService: SaleService,
     private userService: UserService
   ) { }
 
   ngOnInit(): void {
+    // Sempre usa o mesmo cliente fixo (Renan Leme)
+    this.sale.customerId = this.userService.userId;
+
     this.loadProducts();
     this.loadBranches();
-    this.sale.customerId = this.userService.userId;
   }
 
   loadProducts() {
@@ -50,7 +52,27 @@ export class CreateSaleComponent implements OnInit {
   }
 
   submit() {
-    // Implementar lógica para envio da venda
-    console.log(this.sale);
+    // Monta o payload e envia para a API
+    const payload = {
+      customerId: this.sale.customerId,
+      branchId: this.sale.branchId,
+      items: this.sale.items.map((item: any) => ({
+        productId: item.productId,
+        quantity: item.quantity
+      }))
+    };
+
+    console.log('Enviando venda:', payload);
+
+    this.saleService.createSale(payload).subscribe({
+      next: (res) => {
+        console.log('Venda criada com sucesso!', res);
+        alert('Venda registrada com sucesso!');
+      },
+      error: (err) => {
+        console.error('Erro ao criar venda', err);
+        alert('Erro ao criar venda.');
+      }
+    });
   }
 }
