@@ -6,5 +6,6 @@ namespace DeveloperStore.Domain.Interfaces
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task<Product?> GetByIdAsync(Guid productId, CancellationToken cancellationToken);
+        Task<IQueryable<Product>> QueryAsync(CancellationToken cancellationToken);
     }
 }

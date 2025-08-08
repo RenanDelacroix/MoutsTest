@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using DeveloperStore.API.DTOs;
-using DeveloperStore.Application.Commands.Sales;
 using DeveloperStore.Application.DTOs;
 using DeveloperStore.Domain.Entities;
 
