@@ -16,6 +16,7 @@ Antes de iniciar, você precisa ter instalado no seu computador:
 No terminal, navegue até a pasta raiz do projeto e execute:
 
 docker compose build
+
 docker compose up
 
 A aplicação e o banco de dados PostgreSQL serão inicializados automaticamente.
