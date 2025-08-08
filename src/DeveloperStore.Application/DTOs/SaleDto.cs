@@ -12,4 +12,6 @@ public class SaleDto
     public SaleStatus Status { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<SaleItemDto> Items { get; set; } = new();
+    public BranchesDto Branch { get; set; } = new();
+    public string BranchName { get; set; } = null!;
 }

@@ -1,33 +1,56 @@
-import { Component } from '@angular/core';
-import { SaleService } from '../../services/sale.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { BranchService } from 'src/app/services/branch.service';
+import { ProductService } from 'src/app/services/product.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-create-sale',
   templateUrl: './create-sale.component.html'
 })
-export class CreateSaleComponent {
-  sale = {
-    customerId: '',
+
+// ID fixo de usuário (Renan Leme)
+export class CreateSaleComponent implements OnInit {
+  sale: any = {
+    customerId: '',   //ID fixo injetado
     branchId: '',
     items: [{ productId: '', quantity: 1 }]
   };
 
-  constructor(private saleService: SaleService, private router: Router) {}
+  products: any[] = [];
+  branches: any[] = [];
 
-  addItem(): void {
+  constructor(
+    private productService: ProductService,
+    private branchService: BranchService,
+    private userService: UserService
+  ) { }
+
+  ngOnInit(): void {
+    this.loadProducts();
+    this.loadBranches();
+    this.sale.customerId = this.userService.userId;
+  }
+
+  loadProducts() {
+    this.productService.getProducts(1, 10, 'name', 'desc').subscribe({
+      next: (res) => this.products = res.items,
+      error: (err) => console.error('Erro ao carregar produtos', err)
+    });
+  }
+
+  loadBranches() {
+    this.branchService.getBranches().subscribe({
+      next: (res) => this.branches = res,
+      error: (err) => console.error('Erro ao carregar filiais', err)
+    });
+  }
+
+  addItem() {
     this.sale.items.push({ productId: '', quantity: 1 });
   }
 
-  submit(): void {
-    this.saleService.createSale(this.sale).subscribe({
-      next: (res: any) => { 
-        console.log('Venda criada com sucesso', res);
-        this.router.navigate(['/vendas']);
-      },
-      error: (err: any) => { 
-        console.error('Erro ao criar venda', err);
-      }
-    });
+  submit() {
+    // Implementar lógica para envio da venda
+    console.log(this.sale);
   }
 }

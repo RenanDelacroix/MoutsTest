@@ -10,14 +10,16 @@ namespace DeveloperStore.Application.Handlers.Sales;
 public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
 {
     private readonly ISaleRepository _saleRepository;
+    private readonly IBranchRepository _branchRepository;
     private readonly IProductRepository _productRepository;
     private readonly IMapper _mapper;
 
-    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper, IProductRepository productRepository)
+    public CreateSaleHandler(ISaleRepository saleRepository, IMapper mapper, IProductRepository productRepository, IBranchRepository branchRepository)
     {
         _saleRepository = saleRepository;
         _mapper = mapper;
         _productRepository = productRepository;
+        _branchRepository = branchRepository;
     }
 
     public async Task<Guid> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
@@ -26,7 +28,7 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
         {
             CustomerId = request.CustomerId,
             BranchId = request.BranchId,
-            Items = new List<SaleItem>()
+            Items = new List<SaleItem>(),
         };
 
         foreach (var itemDto in request.Items)

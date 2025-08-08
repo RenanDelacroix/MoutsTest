@@ -16,6 +16,7 @@ public class SaleRepository : ISaleRepository
 
     public async Task AddAsync(Sale sale, CancellationToken cancellationToken = default)
     {
+        _context.Entry(sale.Branch).State = EntityState.Detached;
         await _context.Sales.AddAsync(sale, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
     }
@@ -24,6 +25,7 @@ public class SaleRepository : ISaleRepository
     {
         return await _context.Sales
             .Include(s => s.Items)
+            .Include(s => s.Branch)
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }
 
@@ -31,6 +33,7 @@ public class SaleRepository : ISaleRepository
     {
         return await _context.Sales
             .Include(s => s.Items)
+            .Include(s => s.Branch)
             .ToListAsync(cancellationToken);
     }
 

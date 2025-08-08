@@ -10,7 +10,11 @@ public class MappingProfile : Profile
     {
         //Sales
         CreateMap<CreateSaleItemDto, SaleItem>();
-        CreateMap<Sale, SaleDto>();
+        CreateMap<Sale, SaleDto>()
+            .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.Items.Sum(i => i.UnitPrice * i.Quantity - i.Discount)))
+            .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
+            .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
+
         CreateMap<SaleItem, SaleItemDto>();
 
         CreateMap<CreateSaleCommand, Sale>()
@@ -22,5 +26,11 @@ public class MappingProfile : Profile
 
         //products
         CreateMap<Product, ProductDto>().ReverseMap();
+
+        //Branches
+        CreateMap<Branch, BranchesDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ReverseMap();
     }
 }

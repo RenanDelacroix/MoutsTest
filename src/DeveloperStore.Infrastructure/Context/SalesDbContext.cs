@@ -9,6 +9,7 @@ public class SalesDbContext : DbContext
 
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<Branch> Branches => Set<Branch>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,6 +26,11 @@ public class SalesDbContext : DbContext
             entity.Property(s => s.Status).HasColumnName("status").HasConversion<string>();
             entity.Property(s => s.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
             entity.Ignore(s => s.Total);
+
+            entity.HasOne(s => s.Branch)
+                  .WithMany()
+                  .HasForeignKey(s => s.BranchId)
+                  .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<SaleItem>(entity =>
@@ -52,6 +58,14 @@ public class SalesDbContext : DbContext
             entity.Property(p => p.Id).HasColumnName("id");
             entity.Property(p => p.Name).HasColumnName("name").IsRequired();
             entity.Property(p => p.Price).HasColumnName("price").HasColumnType("decimal(18,2)");
+        });
+
+        modelBuilder.Entity<Branch>(entity =>
+        {
+            entity.ToTable("branches");
+            entity.HasKey(p => p.Id);
+            entity.Property(p => p.Id).HasColumnName("id");
+            entity.Property(p => p.Name).HasColumnName("name").IsRequired();
         });
     }
 }

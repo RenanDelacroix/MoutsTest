@@ -12,8 +12,8 @@
   <tbody>
     <tr *ngFor="let sale of sales">
       <td>{{ sale.number }}</td>
-      <td>{{ sale.customerId }}</td>
-      <td>{{ sale.branchId }}</td>
+      <td>{{ sale.customerName }}</td>
+      <td>{{ sale.branchName }}</td>
       <td>{{ sale.total | currency: 'BRL' }}</td>
       <td>{{ sale.status }}</td>
     </tr>

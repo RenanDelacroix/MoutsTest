@@ -7,12 +7,13 @@ import { CreateSaleRequest } from '../models/sale.model';
   providedIn: 'root'
 })
 export class SaleService {
-  private apiUrl = 'http://localhost:5000/api/sales'; 
+  private apiUrl = 'https://localhost:44345/api/Sale'; 
 
   constructor(private http: HttpClient) {}
 
-  getSales(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getSales(pageNumber: number = 1, pageSize: number = 10, orderBy: string = 'createdAt', direction: string = 'desc') {
+    const url = `${this.apiUrl}?orderBy=${orderBy}&direction=${direction}&pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    return this.http.get<any>(url);
   }
 
   createSale(sale: any): Observable<any> {

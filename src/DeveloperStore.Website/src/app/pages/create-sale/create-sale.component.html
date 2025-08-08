@@ -1,24 +1,25 @@
-<h2>Registrar Venda</h2>
-
-<form #saleForm="ngForm" (ngSubmit)="submit()">
-  <div>
-    <label>Cliente</label>
-    <input [(ngModel)]="sale.customerId" name="customerId" required />
-  </div>
-
-  <div>
-    <label>Filial</label>
-    <input [(ngModel)]="sale.branchId" name="branchId" required />
-  </div>
+<form (ngSubmit)="submit()">
+  <h3>Nova Venda</h3>
+  <label>Filial:</label>
+  <select [(ngModel)]="sale.branchId" name="branchId" required>
+    <option *ngFor="let branch of branches" [value]="branch.id">
+      {{ branch.name }}
+    </option>
+  </select>
 
   <div *ngFor="let item of sale.items; let i = index">
-    <label>Produto ID</label>
-    <input [(ngModel)]="item.productId" name="productId{{i}}" required />
+    <label>Produto:</label>
+    <select [(ngModel)]="item.productId" name="productId{{i}}" required>
+      <option *ngFor="let product of products" [value]="product.id">
+        {{ product.name }} (R$ {{ product.price }})
+      </option>
+    </select>
 
-    <label>Quantidade</label>
+    <label>Quantidade:</label>
     <input type="number" [(ngModel)]="item.quantity" name="quantity{{i}}" required />
+
+    <button type="button" (click)="addItem()">+ Produto</button>
   </div>
 
-  <button type="button" (click)="addItem()">+ Produto</button>
-  <button type="submit">Registrar</button>
+  <button type="submit">Enviar</button>
 </form>
