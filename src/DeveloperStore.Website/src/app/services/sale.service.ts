@@ -1,13 +1,13 @@
-// src/app/services/sale.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SaleService {
-  private apiUrl = 'https://localhost:44345/api/Sale';
+  private apiUrl = `${environment.apiUrl}/api/Sale`;
 
   constructor(private http: HttpClient) { }
 
@@ -20,6 +20,6 @@ export class SaleService {
   }
 
   cancelSale(id: string) {
-    return this.http.patch<any>(`https://localhost:44345/api/Sale/${id}/cancel`, {});
+    return this.http.patch<any>(`${this.apiUrl}/${id}/cancel`, {});
   }
 }
