@@ -5,19 +5,17 @@ namespace DeveloperStore.Domain.Entities
     public class Sale
     {
         public Guid Id { get; set; }
-        public string Number { get; set; } = null!;
+        public long Number { get; set; } 
         public Guid CustomerId { get; set; }
         public Guid BranchId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public SaleStatus Status { get; set; } = SaleStatus.Created;
         public decimal Discount { get; set; }
         public List<SaleItem> Items { get; set; } = new();
+        public Branch Branch { get; set; }
+        public string BranchName => Branch.Name;
         public decimal Total => CalculateTotal();
 
-        public Sale()
-        {
-            Number = GenerateSaleNumber();
-        }
 
         private decimal CalculateTotal()
         {
@@ -42,7 +40,7 @@ namespace DeveloperStore.Domain.Entities
             {
                 // Validação: limite máximo por produto
                 if (item.Quantity > 20)
-                    throw new InvalidOperationException($"Product {item.ProductId} exceeds the maximum allowed quantity (20).");
+                    throw new InvalidOperationException($"Produto excedeu a quantidade máxima permitida (20).");
 
                 // Validação: desconto não permitido para menos de 4 unidades
                 if (item.Quantity < 4)
@@ -58,10 +56,6 @@ namespace DeveloperStore.Domain.Entities
             }
         }
 
-        private string GenerateSaleNumber()
-        {
-            // Simples geração randômica de número de venda
-            return new Random().Next(1000, 9999).ToString();
-        }
+        
     }
 }

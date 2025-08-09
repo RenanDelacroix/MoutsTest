@@ -16,14 +16,15 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<ISaleRepository, SaleRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IBranchRepository, BranchRepository>();
 
         services.AddSingleton<IEventPublisher, MongoEventPublisher>();
 
-        // 1. Corrige o Guid
+        //Corrige o Guid
         BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
         BsonDefaults.GuidRepresentationMode = GuidRepresentationMode.V3;
 
-        // 2. Registra os tipos
+        //Registra os tipos
         if (!BsonClassMap.IsClassMapRegistered(typeof(SaleCreatedEvent)))
         {
             BsonClassMap.RegisterClassMap<SaleCreatedEvent>(cm =>
@@ -33,7 +34,7 @@ public static class ServiceCollectionExtensions
             });
         }
 
-        // 3. Mongo client configurado corretamente
+        //Mongo client configurado corretamente
         services.AddSingleton<IMongoClient>(sp =>
         {
             var settings = MongoClientSettings.FromConnectionString(configuration.GetConnectionString("MongoDb"));

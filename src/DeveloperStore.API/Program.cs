@@ -31,6 +31,17 @@ builder.Services.AddControllers()
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
+//Cors Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularOrigin", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +50,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRouting();
+app.UseCors("AllowAngularOrigin");
 
 app.UseHttpsRedirection();
 

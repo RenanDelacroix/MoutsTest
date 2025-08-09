@@ -46,13 +46,13 @@ public class SaleController : ControllerBase
         }
         catch (KeyNotFoundException)
         {
-            return NotFound(new { message = $"Sale with ID {id} not found." });
+            return NotFound(new { message = $"Venda não encontrada." });
         }
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll(
-    [FromQuery] string? number,
+    [FromQuery] long number,
     [FromQuery] string? orderBy = "createdAt",
     [FromQuery] string? direction = "desc",
     [FromQuery] int pageNumber = 1,
@@ -79,7 +79,7 @@ public class SaleController : ControllerBase
             _logger.LogInformation("Attempting to cancel sale with ID: {SaleId}", id);
             await _mediator.Send(new CancelSaleCommand(id));
             _logger.LogInformation("Successfully canceled sale with ID: {SaleId}", id);
-            return Ok(new { message = $"Sale with ID {id} was canceled." });
+            return Ok(new { message = $"Venda cancelada com sucesso." });
         }
         catch (KeyNotFoundException)
         {

@@ -36,6 +36,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init-scripts:/docker-entrypoint-initdb.d  # Executa os scripts SQL
 
+  website:
+    build:
+      context: ./src/DeveloperStore.Website
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+    depends_on:
+      - api
+
+
 volumes:
   mongo_data:
   postgres_data:

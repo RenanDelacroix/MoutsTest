@@ -24,5 +24,12 @@ namespace DeveloperStore.Infrastructure.Repositories
         {
             return await _context.Products.FirstOrDefaultAsync(s => s.Id == productId, cancellationToken);
         }
+
+        public Task<IQueryable<Product>> QueryAsync(CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_context.Products
+                    .AsNoTracking()
+                    .AsQueryable());
+        }
     }
 }

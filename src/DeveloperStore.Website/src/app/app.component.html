@@ -1,0 +1,16 @@
+<header class="app-header" mat-toolbar color="primary">
+  <span>🛒 Developer Store</span>
+  <span class="spacer"></span>
+  <span>Usuário logado: <strong>{{ userService.userName }}</strong></span>
+</header>
+
+<main class="app-content">
+  <mat-tab-group (selectedIndexChange)="onTabChange($event)" mat-stretch-tabs>
+    <mat-tab label="🆕 Criar Venda">
+      <app-create-sale></app-create-sale>
+    </mat-tab>
+    <mat-tab label="📋 Listar Vendas">
+      <app-list-sales #salesList></app-list-sales>
+    </mat-tab>
+  </mat-tab-group>
+</main>
