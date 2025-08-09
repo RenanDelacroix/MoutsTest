@@ -11,15 +11,11 @@ Antes de iniciar, você precisa ter instalado no seu computador:
 
 **Docker** — última versão instalada e configurada corretamente
 
-🚀 **Executando a aplicação**  *Rodando em localhost:5000*
+🚀 **Executando a aplicação**  *API Rodando em localhost:5000/swagger e Site rodando em localhost:4200*
 
 No terminal, navegue até a pasta raiz do projeto e execute:
 
-docker compose build
-
-docker compose up
-
-A aplicação e o banco de dados PostgreSQL serão inicializados automaticamente.
+docker compose up --build
 
 🔄 **Reiniciando o ambiente do zero**
 
@@ -45,4 +41,4 @@ Exemplo de consulta:
 
 SELECT * FROM saleitem;
 
-_Ps: vou terminar o desafio, melhorando o back-end e terminar o front em Angular, mesmo após o prazo._
+
