@@ -21,6 +21,20 @@ export class ListSalesComponent implements OnInit {
     this.loadSales();
   }
 
+  displayedColumns = ['number', 'customer', 'branch', 'subtotal', 'discount', 'total', 'status', 'createdAt', 'actions'];
+  pageSize = 10;
+  pageNumber = 1;
+
+  onPageChange(event: any) {
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.loadSales();
+  }
+
+  getSubtotal(sale: any): number {
+    return sale.items.reduce((sum: number, item: any) => sum + item.subtotal, 0);
+  }
+
   loadSales() {
     this.saleService.getSales().subscribe({
       next: (data) => {
