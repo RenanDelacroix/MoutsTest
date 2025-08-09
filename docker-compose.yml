@@ -6,14 +6,20 @@ services:
       context: ./src
       dockerfile: DeveloperStore.API/Dockerfile
     ports:
-      - "5000:8080"
+      - "5000:8080"  
     depends_on:
-      - mongo
-      - postgres
+      postgres:
+        condition: service_healthy
+      mongo:
+        condition: service_started
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__MongoDb=mongodb://mongo:27017
-      - ConnectionStrings__DefaultConnection=Host=postgres;Database=developerstore;Username=postgres;Password=postgres
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__MongoDb: mongodb://mongo:27017
+      # Connection string CORRETA para Npgsql (sem "tcp://")
+      ConnectionStrings__DefaultConnection: >
+        Host=postgres;Port=5432;Database=developerstore;
+        Username=postgres;Password=postgres;Pooling=true
 
   mongo:
     image: mongo
@@ -34,7 +40,12 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init-scripts:/docker-entrypoint-initdb.d  # Executa os scripts SQL
+      - ./db/init-scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d developerstore"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
 
   website:
     build:
@@ -45,7 +56,6 @@ services:
     restart: unless-stopped
     depends_on:
       - api
-
 
 volumes:
   mongo_data:

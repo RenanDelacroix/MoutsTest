@@ -1,27 +1,22 @@
-# Etapa 1 — Build do Angular
-FROM node:20 AS build
+# --- build (Angular) ---
+FROM node:20-alpine AS build
 WORKDIR /app
 
-# Copia dependências e instala
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
-# Copia todo o código
 COPY . .
+# build de produção (usa o fileReplacements para environment.prod.ts)
+RUN npm run build -- --configuration=production
 
-# Build usando environment.prod.ts
-RUN npm run build -- --configuration production
+# --- runtime (Nginx) ---
+FROM nginx:1.25-alpine
 
-FROM nginx:1.27
-
-# Remove configuração padrão do nginx
-RUN rm /etc/nginx/conf.d/default.conf
-
-# Copia configuração personalizada
+# copia a config do proxy
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copia os arquivos buildados para o nginx
-COPY --from=build /app/dist/* /usr/share/nginx/html
+# copie o output do Angular para a raiz do Nginx
+# ajuste este caminho se o seu outputPath for outro no angular.json
+COPY --from=build /app/dist/developer-store.website /usr/share/nginx/html
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
