@@ -21,7 +21,7 @@ public class SalesDbContext : DbContext
 
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Id).HasColumnName("id");
-            entity.Property(s => s.Number).HasColumnName("number").IsRequired();
+            entity.Property(s => s.Number).HasColumnName("number").ValueGeneratedOnAddOrUpdate();
             entity.Property(s => s.CustomerId).HasColumnName("customerid");
             entity.Property(s => s.BranchId).HasColumnName("branchid");
             entity.Property(s => s.CreatedAt).HasColumnName("createdat");

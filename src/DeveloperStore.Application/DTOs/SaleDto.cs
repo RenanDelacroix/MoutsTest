@@ -4,7 +4,7 @@ using DeveloperStore.Domain.Enums;
 public class SaleDto
 {
     public Guid Id { get; set; }
-    public string Number { get; set; } = null!;
+    public long Number { get; set; } // Changed from string to long
     public Guid CustomerId { get; set; }
     public Guid BranchId { get; set; }
     public decimal Discount { get; set; }

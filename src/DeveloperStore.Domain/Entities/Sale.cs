@@ -5,7 +5,7 @@ namespace DeveloperStore.Domain.Entities
     public class Sale
     {
         public Guid Id { get; set; }
-        public string Number { get; set; } = null!;
+        public long Number { get; set; } 
         public Guid CustomerId { get; set; }
         public Guid BranchId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -16,10 +16,6 @@ namespace DeveloperStore.Domain.Entities
         public string BranchName => Branch.Name;
         public decimal Total => CalculateTotal();
 
-        public Sale()
-        {
-            Number = GenerateSaleNumber();
-        }
 
         private decimal CalculateTotal()
         {
@@ -60,10 +56,6 @@ namespace DeveloperStore.Domain.Entities
             }
         }
 
-        private string GenerateSaleNumber()
-        {
-            // Simples geração randômica de número de venda
-            return new Random().Next(1000, 9999).ToString();
-        }
+        
     }
 }

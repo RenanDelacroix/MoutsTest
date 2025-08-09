@@ -2,7 +2,7 @@
 {
     public class CreateSaleDto
     {
-        public string Number { get; set; } = null!;
+        public long Number { get; set; }
         public Guid CustomerId { get; set; }
         public Guid BranchId { get; set; }
         public decimal Discount { get; set; }

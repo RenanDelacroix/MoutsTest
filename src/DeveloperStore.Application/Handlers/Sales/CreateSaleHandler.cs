@@ -31,6 +31,9 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
             Items = new List<SaleItem>()
         };
 
+        if(request.Items.Any(x => x.Quantity <= 0))
+            throw new InvalidOperationException("Quantidade deve ser maior que zero.");
+
         foreach (var itemDto in request.Items)
         {
             var product = await _productRepository.GetByIdAsync(itemDto.ProductId, cancellationToken);

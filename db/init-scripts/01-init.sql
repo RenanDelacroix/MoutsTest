@@ -8,7 +8,7 @@ CREATE TABLE branches (
 -- Tabela de Vendas
 CREATE TABLE sales (
     id UUID PRIMARY KEY,
-    number VARCHAR NOT NULL,
+    number bigserial NOT NULL,
     customerid UUID NOT NULL,
     branchid UUID NOT NULL,
     createdat TIMESTAMP WITHOUT TIME ZONE NOT NULL,

@@ -52,7 +52,7 @@ public class SaleController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetAll(
-    [FromQuery] string? number,
+    [FromQuery] long number,
     [FromQuery] string? orderBy = "createdAt",
     [FromQuery] string? direction = "desc",
     [FromQuery] int pageNumber = 1,
