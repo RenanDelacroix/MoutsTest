@@ -10,6 +10,7 @@
       <th>Total</th>
       <th>Status</th>
       <th>Data de criação</th>
+      <th>Ações</th>
     </tr>
   </thead>
   <tbody>
@@ -22,6 +23,12 @@
       <td>{{ sale.totalComDesconto | currency: 'BRL' }}</td>
       <td>{{ sale.status }}</td>
       <td>{{ sale.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>
+        <button *ngIf="sale.status !== 'Cancelled'"
+                (click)="cancelSale(sale.id)">
+          Cancelar
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

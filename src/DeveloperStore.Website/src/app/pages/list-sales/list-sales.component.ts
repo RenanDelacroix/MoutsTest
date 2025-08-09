@@ -35,4 +35,20 @@ export class ListSalesComponent implements OnInit {
       }
     });
   }
+
+  cancelSale(id: string) {
+    if (!confirm('Tem certeza que deseja cancelar esta venda?')) return;
+
+    this.saleService.cancelSale(id).subscribe({
+      next: (res) => {
+        alert(res.message);
+        this.loadSales(); // Atualiza lista após cancelar
+      },
+      error: (err) => {
+        console.error('Erro ao cancelar venda', err);
+        alert('Erro ao cancelar a venda.');
+      }
+    });
+  }
+
 }

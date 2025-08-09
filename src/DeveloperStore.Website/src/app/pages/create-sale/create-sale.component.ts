@@ -52,7 +52,6 @@ export class CreateSaleComponent implements OnInit {
   }
 
   submit() {
-    // Monta o payload e envia para a API
     const payload = {
       customerId: this.sale.customerId,
       branchId: this.sale.branchId,
@@ -62,16 +61,17 @@ export class CreateSaleComponent implements OnInit {
       }))
     };
 
-    console.log('Enviando venda:', payload);
-
     this.saleService.createSale(payload).subscribe({
       next: (res) => {
-        console.log('Venda criada com sucesso!', res);
         alert('Venda registrada com sucesso!');
       },
       error: (err) => {
+        if (err.status === 400 && err.error) {
+          alert(`Erro ao criar venda: ${err.error}`);
+        } else {
+          alert('Erro ao criar venda: Ocorreu um erro inesperado.');
+        }
         console.error('Erro ao criar venda', err);
-        alert('Erro ao criar venda.');
       }
     });
   }

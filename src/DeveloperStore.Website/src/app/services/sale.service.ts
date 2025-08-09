@@ -18,4 +18,8 @@ export class SaleService {
   createSale(sale: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, sale);
   }
+
+  cancelSale(id: string) {
+    return this.http.patch<any>(`https://localhost:44345/api/Sale/${id}/cancel`, {});
+  }
 }

@@ -44,7 +44,7 @@ namespace DeveloperStore.Domain.Entities
             {
                 // Validação: limite máximo por produto
                 if (item.Quantity > 20)
-                    throw new InvalidOperationException($"Product {item.ProductId} exceeds the maximum allowed quantity (20).");
+                    throw new InvalidOperationException($"Produto excedeu a quantidade máxima permitida (20).");
 
                 // Validação: desconto não permitido para menos de 4 unidades
                 if (item.Quantity < 4)
