@@ -42,12 +42,18 @@
         <th>Qtd</th>
         <th>Preço</th>
         <th>Subtotal</th>
+        <th>Remover</th>
       </tr>
-      <tr *ngFor="let item of sale.items">
+      <tr *ngFor="let item of sale.items; ; let i = index">
         <td>{{ getProductName(item.productId) }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ getProductPrice(item.productId) | currency:'BRL' }}</td>
         <td>{{ item.quantity * getProductPrice(item.productId) | currency:'BRL' }}</td>
+        <td>
+          <button mat-icon-button color="warn" (click)="removeItem(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
       </tr>
     </table>
   </div>

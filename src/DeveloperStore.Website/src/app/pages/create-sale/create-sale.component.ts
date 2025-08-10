@@ -75,6 +75,10 @@ export class CreateSaleComponent implements OnInit {
     this.selectedQuantity = 1;
   }
 
+  removeItem(index: number) {
+    this.sale.items.splice(index, 1);
+  }
+
   getProductName(productId: string): string {
     const product = this.products.find((p) => p.id === productId);
     return product ? product.name : '';

@@ -28,7 +28,6 @@ namespace DeveloperStore.Domain.Entities
             if (Status != SaleStatus.Created)
                 throw new InvalidOperationException("Only sales in 'Created' status can be cancelled.");
 
-            CreatedAt = CreatedAt.ToUniversalTime();
             Status = SaleStatus.Cancelled;
             
         }

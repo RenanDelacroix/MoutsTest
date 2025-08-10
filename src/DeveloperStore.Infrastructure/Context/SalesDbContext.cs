@@ -1,6 +1,7 @@
 ﻿using DeveloperStore.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 
 namespace DeveloperStore.Infrastructure.Context;
@@ -15,6 +16,12 @@ public class SalesDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+        var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
+        v => v.Kind == DateTimeKind.Utc ? v : v.ToUniversalTime(), // salvar
+        v => DateTime.SpecifyKind(v, DateTimeKind.Utc)              //ler
+        );
+
         modelBuilder.Entity<Sale>(entity =>
         {
             entity.ToTable("sales");

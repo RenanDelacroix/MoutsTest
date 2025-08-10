@@ -3,12 +3,17 @@ using DeveloperStore.CrossCutting.DependencyInjection;
 using DeveloperStore.Domain.Enums;
 using DeveloperStore.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Rebus.Config;
 using Rebus.Transport.InMem;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Definir cultura global para pt-BR
+var cultureInfo = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -20,7 +25,17 @@ builder.Services.AddRebus(configure => configure
 
 // Registro de Contexto do banco de dados
 builder.Services.AddDbContext<SalesDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsqlOptions =>
+        {
+            npgsqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorCodesToAdd: null);
+        });
+});
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
