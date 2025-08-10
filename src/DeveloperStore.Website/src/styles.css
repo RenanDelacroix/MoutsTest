@@ -1,13 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+/* Importando tema Angular Material */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* ===== Header ===== */
 .app-header {
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  justify-content: space-between;
+  padding: 8px 32px;
   font-size: 18px;
+  height: 64px;
+  background: linear-gradient(to right, #3F51B5, #303F9F); /* Indigo 500 → Indigo 700 */
+  color: white;
 }
+
+  .app-header strong {
+    color: white;
+  }
 
 .spacer {
   flex: 1 1 auto;
@@ -17,6 +34,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 20px;
 }
 
+/* ===== Formulário de venda ===== */
 .sale-form {
   display: flex;
   flex-direction: column;
@@ -26,6 +44,94 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .sale-item {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
 }
+
+  .sale-item button[mat-mini-fab] {
+    margin-left: 24px; /* afasta mais do campo quantidade */
+    align-self: center; /* centraliza verticalmente */
+  }
+
+/* ===== Estilo profissional para abas ===== */
+.custom-tabs .mat-tab-header {
+  border-bottom: none; /* remove linha padrão */
+  margin-top: 8px;
+}
+
+.custom-tabs .mat-tab-label {
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 12px 24px !important;
+  background-color: #e8eaf6; /* Indigo 50 */
+  color: #3f51b5; /* Indigo principal */
+  border: 2px solid transparent;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  transition: background-color 0.25s, border 0.25s, box-shadow 0.25s;
+}
+
+  .custom-tabs .mat-tab-label:hover {
+    background-color: #c5cae9; /* Indigo 100 */
+    cursor: pointer;
+  }
+
+  .custom-tabs .mat-tab-label.mat-tab-label-active {
+    background-color: #3f51b5 !important; /* Indigo principal */
+    color: #fff !important;
+    border: 2px solid #3f51b5;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.2); /* destaque com sombra */
+  }
+
+/* Linha indicadora mais grossa e escura */
+.custom-tabs .mat-ink-bar {
+  height: 4px;
+  background-color: #303f9f !important; /* Indigo mais escuro */
+  border-radius: 2px;
+}
+
+/* ===== Abas Indigo com degradê e transparência ===== */
+
+/* Abas inativas */
+.custom-tabs .mat-mdc-tab {
+  background-color: rgba(63, 81, 181, 0.08); /* Indigo 50 com transparência */
+  color: #3F51B5; /* Indigo principal */
+  border-radius: 8px 8px 0 0;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+  /* Hover nas abas inativas */
+  .custom-tabs .mat-mdc-tab:hover {
+    background-color: rgba(63, 81, 181, 0.15); /* Indigo 100 com transparência */
+  }
+
+  /* Aba ativa com degradê */
+  .custom-tabs .mat-mdc-tab.mdc-tab--active {
+    background: linear-gradient( to bottom, rgba(63, 81, 181, 0.2), rgba(63, 81, 181, 0.35) );
+    color: #3F51B5; /* Texto continua indigo */
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+/* Linha indicadora da aba ativa */
+.custom-tabs .mat-mdc-tab-header .mat-mdc-tab-indicator .mat-mdc-tab-indicator-content {
+  background-color: #3F51B5 !important; /* Indigo principal */
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* ===== Botão Enviar ajustado ===== */
+.sale-form button[type="submit"] {
+  align-self: flex-start; /* Alinha à esquerda */
+  padding: 4px 12px; /* Mais compacto */
+  font-size: 14px; /* Texto menor */
+  background-color: #ff80ab !important; /* Rosa claro do tema */
+  color: white;
+}
+
+  .sale-form button[type="submit"]:hover {
+    background-color: #ff4081 !important; /* Rosa accent padrão no hover */
+  }
