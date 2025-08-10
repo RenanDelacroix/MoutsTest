@@ -14,7 +14,7 @@ export class SaleService {
   getSales(pageNumber: number, pageSize: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}`, {
       params: {
-        orderBy: 'createdAt',
+        orderBy: 'number',
         direction: 'desc',
         pageNumber: pageNumber.toString(),
         pageSize: pageSize.toString()

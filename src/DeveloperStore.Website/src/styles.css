@@ -10,7 +10,6 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* ===== Header ===== */
 .app-header {
   display: flex;
   align-items: center;
@@ -18,7 +17,7 @@ body {
   padding: 8px 32px;
   font-size: 18px;
   height: 64px;
-  background: linear-gradient(to right, #3F51B5, #303F9F); /* Indigo 500 → Indigo 700 */
+  background: linear-gradient(to right, #3F51B5, #303F9F);
   color: white;
 }
 
@@ -34,7 +33,6 @@ body {
   padding: 20px;
 }
 
-/* ===== Formulário de venda ===== */
 .sale-form {
   display: flex;
   flex-direction: column;
@@ -49,13 +47,13 @@ body {
 }
 
   .sale-item button[mat-mini-fab] {
-    margin-left: 24px; /* afasta mais do campo quantidade */
-    align-self: center; /* centraliza verticalmente */
+    margin-left: 24px; 
+    align-self: center; 
   }
 
-/* ===== Estilo profissional para abas ===== */
+
 .custom-tabs .mat-tab-header {
-  border-bottom: none; /* remove linha padrão */
+  border-bottom: none; 
   margin-top: 8px;
 }
 
@@ -63,8 +61,8 @@ body {
   font-weight: bold;
   text-transform: uppercase;
   padding: 12px 24px !important;
-  background-color: #e8eaf6; /* Indigo 50 */
-  color: #3f51b5; /* Indigo principal */
+  background-color: #e8eaf6; 
+  color: #3f51b5; 
   border: 2px solid transparent;
   border-bottom: none;
   border-radius: 8px 8px 0 0;
@@ -72,66 +70,88 @@ body {
 }
 
   .custom-tabs .mat-tab-label:hover {
-    background-color: #c5cae9; /* Indigo 100 */
+    background-color: #c5cae9; 
     cursor: pointer;
   }
 
   .custom-tabs .mat-tab-label.mat-tab-label-active {
-    background-color: #3f51b5 !important; /* Indigo principal */
+    background-color: #3f51b5 !important; 
     color: #fff !important;
     border: 2px solid #3f51b5;
     border-bottom: none;
     border-radius: 8px 8px 0 0;
-    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.2); /* destaque com sombra */
+    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.2); 
   }
 
-/* Linha indicadora mais grossa e escura */
 .custom-tabs .mat-ink-bar {
   height: 4px;
-  background-color: #303f9f !important; /* Indigo mais escuro */
+  background-color: #303f9f !important; 
   border-radius: 2px;
 }
 
-/* ===== Abas Indigo com degradê e transparência ===== */
 
-/* Abas inativas */
 .custom-tabs .mat-mdc-tab {
-  background-color: rgba(63, 81, 181, 0.08); /* Indigo 50 com transparência */
-  color: #3F51B5; /* Indigo principal */
+  background-color: rgba(63, 81, 181, 0.08); 
+  color: #3F51B5; 
   border-radius: 8px 8px 0 0;
   transition: background 0.3s, color 0.3s, box-shadow 0.3s;
 }
 
-  /* Hover nas abas inativas */
+  
   .custom-tabs .mat-mdc-tab:hover {
-    background-color: rgba(63, 81, 181, 0.15); /* Indigo 100 com transparência */
+    background-color: rgba(63, 81, 181, 0.15); 
   }
 
-  /* Aba ativa com degradê */
+  
   .custom-tabs .mat-mdc-tab.mdc-tab--active {
     background: linear-gradient( to bottom, rgba(63, 81, 181, 0.2), rgba(63, 81, 181, 0.35) );
-    color: #3F51B5; /* Texto continua indigo */
+    color: #3F51B5; 
     font-weight: bold;
     border-radius: 8px 8px 0 0;
     box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.15);
   }
 
-/* Linha indicadora da aba ativa */
+
 .custom-tabs .mat-mdc-tab-header .mat-mdc-tab-indicator .mat-mdc-tab-indicator-content {
-  background-color: #3F51B5 !important; /* Indigo principal */
+  background-color: #3F51B5 !important; 
   height: 4px;
   border-radius: 2px;
 }
 
-/* ===== Botão Enviar ajustado ===== */
+
 .sale-form button[type="submit"] {
-  align-self: flex-start; /* Alinha à esquerda */
-  padding: 4px 12px; /* Mais compacto */
-  font-size: 14px; /* Texto menor */
-  background-color: #ff80ab !important; /* Rosa claro do tema */
+  align-self: flex-start; 
+  padding: 4px 12px; 
+  font-size: 14px;
+  background-color: #ff80ab !important; 
   color: white;
 }
 
   .sale-form button[type="submit"]:hover {
-    background-color: #ff4081 !important; /* Rosa accent padrão no hover */
+    background-color: #ff4081 !important; 
+  }
+
+  .add-product-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-panel {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .product-table th,
+  .product-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
   }

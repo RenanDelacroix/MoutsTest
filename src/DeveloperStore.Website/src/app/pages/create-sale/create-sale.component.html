@@ -1,6 +1,7 @@
 <form (ngSubmit)="submit()" class="sale-form">
   <h2>🆕 Nova Venda</h2>
 
+  <!-- Seleção da Filial -->
   <mat-form-field appearance="fill">
     <mat-label>Filial</mat-label>
     <mat-select [(ngModel)]="sale.branchId" name="branchId" required>
@@ -10,10 +11,11 @@
     </mat-select>
   </mat-form-field>
 
-  <div *ngFor="let item of sale.items; let i = index" class="sale-item">
+  <!-- Linha para selecionar e adicionar produto -->
+  <div class="add-product-row">
     <mat-form-field appearance="fill">
       <mat-label>Produto</mat-label>
-      <mat-select [(ngModel)]="item.productId" name="productId{{i}}" required>
+      <mat-select [(ngModel)]="selectedProductId" name="selectedProductId" required>
         <mat-option *ngFor="let product of products" [value]="product.id">
           {{ product.name }} (R$ {{ product.price }})
         </mat-option>
@@ -22,13 +24,34 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Quantidade</mat-label>
-      <input matInput type="number" [(ngModel)]="item.quantity" name="quantity{{i}}" required />
+      <input matInput type="number" [(ngModel)]="selectedQuantity" name="selectedQuantity" min="1" required />
     </mat-form-field>
 
-    <button mat-mini-fab color="primary" type="button" (click)="addItem()">
+    <button mat-mini-fab color="primary" type="button" (click)="addProductToPanel()">
       <mat-icon>add</mat-icon>
     </button>
   </div>
 
+  <!-- Painel lateral de produtos -->
+  <div class="product-panel">
+    <h3>Produtos adicionados</h3>
+    <div *ngIf="sale.items.length === 0">Nenhum produto adicionado</div>
+    <table *ngIf="sale.items.length > 0" class="product-table">
+      <tr>
+        <th>Produto</th>
+        <th>Qtd</th>
+        <th>Preço</th>
+        <th>Subtotal</th>
+      </tr>
+      <tr *ngFor="let item of sale.items">
+        <td>{{ getProductName(item.productId) }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ getProductPrice(item.productId) | currency:'BRL' }}</td>
+        <td>{{ item.quantity * getProductPrice(item.productId) | currency:'BRL' }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Botão enviar -->
   <button mat-raised-button color="accent" type="submit">💾 Enviar</button>
 </form>
