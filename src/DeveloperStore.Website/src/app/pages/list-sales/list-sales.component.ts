@@ -65,4 +65,19 @@ export class ListSalesComponent implements OnInit {
     });
   }
 
+  paySale(id: string) {
+    if (!confirm('Tem certeza que deseja marcar esta venda como paga?')) return;
+
+    this.saleService.paySale(id).subscribe({
+      next: (res) => {
+        alert(res.message);
+        this.loadSales(); // Atualiza lista após pagar
+      },
+      error: (err) => {
+        console.error('Erro ao pagar venda', err);
+        alert('Erro ao pagar a venda.');
+      }
+    });
+  }
+
 }

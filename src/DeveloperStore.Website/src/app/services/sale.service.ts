@@ -29,4 +29,8 @@ export class SaleService {
   cancelSale(id: string) {
     return this.http.patch<any>(`${this.apiUrl}/${id}/cancel`, {});
   }
+
+  paySale(id: string) {
+    return this.http.patch<{ message: string }>(`${this.apiUrl}/${id}/pay`, {});
+  }
 }

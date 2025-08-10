@@ -56,6 +56,12 @@ namespace DeveloperStore.Domain.Entities
             }
         }
 
-        
+        public void Pay()
+        {
+            if (Status != SaleStatus.Created)
+                throw new InvalidOperationException("Apenas vendas em status Created podem ser pagas.");
+
+            Status = SaleStatus.Paid;
+        }
     }
 }

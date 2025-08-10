@@ -60,6 +60,11 @@
                 (click)="cancelSale(sale.id)">
           Cancelar
         </button>
+        <button mat-raised-button color="primary"
+                *ngIf="sale.status === 'Created'"
+                (click)="paySale(sale.id)">
+          Pagar
+        </button>
       </td>
     </ng-container>
 

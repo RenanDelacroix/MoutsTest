@@ -93,4 +93,22 @@ public class SaleController : ControllerBase
         }
     }
 
+    [HttpPatch("{id}/pay")]
+    public async Task<IActionResult> Pay(Guid id)
+    {
+        try
+        {
+            await _mediator.Send(new PaySaleCommand(id));
+            return Ok(new { message = $"Venda paga com sucesso." });
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound(new { message = $"Sale {id} not found." });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
 }
