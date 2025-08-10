@@ -41,14 +41,17 @@ No terminal, navegue até a pasta raiz do projeto onde está a sln e docker-comp
 🚀 **Executando a aplicação local no Visual Studio 2022**
     - Apontar o projeto DeveloperStore.API como *start-up project* no VisualStudio
 
+    - Subir a base de dados
+
     - Executar normalmente com debug no IISExpress
 
-    - Angular: Ir para a pasta raiz do projeto DeveloperStore.Website e executar npm start no terminal de comando
+    - Angular: Ir para a pasta raiz do projeto DeveloperStore.Website e executar [npm start] no terminal de comando
 
 NESTE CASO:
  - API no [localhost:44345/swagger]
  - Website Angular no [localhost:4200] também
- - O banco precisa estar local também com base no script localizado na pasta db, da raiz do projeto e da connection string do appsettings.
+ - O banco precisa estar local. Ou entrar na [PastaRaizDoProjeto/deb-2-local] no terminal e executar [docker compose up] para subir apenas o banco
+ - Lembrando que, as portas precisam estar liberadas e não concorrendo com estas.
 
 🔄 **Reiniciando o ambiente do zero**
 
