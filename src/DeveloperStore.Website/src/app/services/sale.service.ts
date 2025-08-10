@@ -11,8 +11,15 @@ export class SaleService {
 
   constructor(private http: HttpClient) { }
 
-  getSales(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?orderBy=createdAt&direction=desc&pageNumber=1&pageSize=10`);
+  getSales(pageNumber: number, pageSize: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}`, {
+      params: {
+        orderBy: 'createdAt',
+        direction: 'desc',
+        pageNumber: pageNumber.toString(),
+        pageSize: pageSize.toString()
+      }
+    });
   }
 
   createSale(sale: any): Observable<any> {

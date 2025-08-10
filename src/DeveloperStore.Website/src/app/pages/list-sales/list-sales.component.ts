@@ -36,7 +36,7 @@ export class ListSalesComponent implements OnInit {
   }
 
   loadSales() {
-    this.saleService.getSales().subscribe({
+    this.saleService.getSales(this.pageNumber, this.pageSize).subscribe({
       next: (data) => {
         this.sales = data.items.map((sale: any) => ({
           ...sale,
