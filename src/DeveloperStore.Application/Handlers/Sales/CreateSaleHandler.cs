@@ -28,6 +28,7 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, Guid>
         {
             CustomerId = request.CustomerId,
             BranchId = request.BranchId,
+            CreatedAt = DateTime.UtcNow,
             Items = new List<SaleItem>()
         };
 

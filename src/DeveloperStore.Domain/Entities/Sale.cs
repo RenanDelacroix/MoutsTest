@@ -8,7 +8,7 @@ namespace DeveloperStore.Domain.Entities
         public long Number { get; set; } 
         public Guid CustomerId { get; set; }
         public Guid BranchId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
         public SaleStatus Status { get; set; } = SaleStatus.Created;
         public decimal Discount { get; set; }
         public List<SaleItem> Items { get; set; } = new();
@@ -29,7 +29,7 @@ namespace DeveloperStore.Domain.Entities
                 throw new InvalidOperationException("Only sales in 'Created' status can be cancelled.");
 
             Status = SaleStatus.Cancelled;
-            CreatedAt = CreatedAt.ToUniversalTime(); // Garantir UTC
+            
         }
 
         public void ApplyDiscountRules()
