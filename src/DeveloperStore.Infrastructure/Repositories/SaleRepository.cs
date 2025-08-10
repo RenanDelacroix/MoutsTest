@@ -33,6 +33,7 @@ public class SaleRepository : ISaleRepository
     {
         return await _context.Sales
             .Include(s => s.Items)
+                .ThenInclude(i => i.Product) 
             .Include(s => s.Branch)
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
     }

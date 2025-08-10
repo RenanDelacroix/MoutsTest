@@ -15,7 +15,19 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.Branch.Name))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.Items));
 
-        CreateMap<SaleItem, SaleItemDto>();
+        CreateMap<SaleItem, SaleItemDto>()
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+            .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.UnitPrice))
+            .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => src.Discount))
+            .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product));
+
+        CreateMap<Product, ProductDto>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
+
 
         CreateMap<CreateSaleCommand, Sale>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(_ => Guid.NewGuid()))

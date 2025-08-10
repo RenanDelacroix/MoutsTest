@@ -59,6 +59,13 @@ public class SalesDbContext : DbContext
                   .WithMany(s => s.Items)
                   .HasForeignKey(i => i.SaleId)
                   .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne<Product>(s => s.Product)
+                  .WithMany(s => s.SaleItems)
+                  .HasForeignKey(s => s.ProductId)
+                  .HasConstraintName("fk_product");
+
+
         });
 
         modelBuilder.Entity<Product>(entity =>
