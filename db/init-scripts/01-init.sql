@@ -1,4 +1,6 @@
 
+ALTER DATABASE developerstore SET TIMEZONE TO 'America/Sao_Paulo';
+
 --tabela de filiais
 CREATE TABLE branches (
     id UUID PRIMARY KEY,
@@ -11,7 +13,7 @@ CREATE TABLE sales (
     number bigserial NOT NULL,
     customerid UUID NOT NULL,
     branchid UUID NOT NULL,
-    createdat TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    createdat TIMESTAMP WITH TIME ZONE NOT NULL,
     status TEXT NOT NULL,
     discount DECIMAL(18,2) NOT NULL,
     CONSTRAINT fk_branches FOREIGN KEY (branchid) REFERENCES branches(id) ON DELETE CASCADE
