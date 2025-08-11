@@ -54,6 +54,7 @@ public class SalesDbContext : DbContext
             entity.Property(i => i.Quantity).HasColumnName("quantity");
             entity.Property(i => i.UnitPrice).HasColumnName("unitprice").HasColumnType("decimal(18,2)");
             entity.Property(i => i.Discount).HasColumnName("discount").HasColumnType("decimal(18,2)");
+            entity.Ignore(i => i.Subtotal); //Calculado dinamicamente
 
             entity.HasOne<Sale>()
                   .WithMany(s => s.Items)

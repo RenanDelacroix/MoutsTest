@@ -33,4 +33,8 @@ export class SaleService {
   paySale(id: string) {
     return this.http.patch<{ message: string }>(`${this.apiUrl}/${id}/pay`, {});
   }
+
+  getSaleById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
 }

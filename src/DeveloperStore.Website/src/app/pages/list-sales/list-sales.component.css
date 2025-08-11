@@ -1,0 +1,44 @@
+/* Cabeçalho fixo */
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #fff;
+}
+
+.mat-header-cell {
+  background-color: #fff;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Área de rolagem da tabela */
+.sales-card {
+  max-height: 500px; 
+  overflow-y: auto;
+}
+
+/* Estilo da linha de detalhe */
+.detail-row {
+  background-color: #fafafa;
+}
+
+.inner-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .inner-table th, .inner-table td {
+    padding: 6px 12px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .inner-table th {
+    background-color: #f1f1f1;
+    font-weight: bold;
+  }
+
+.loading {
+  padding: 10px;
+  font-style: italic;
+}

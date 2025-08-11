@@ -25,8 +25,8 @@ namespace DeveloperStore.Domain.Entities
 
         public void Cancel()
         {
-            if (Status != SaleStatus.Created)
-                throw new InvalidOperationException("Only sales in 'Created' status can be cancelled.");
+            if (Status == SaleStatus.Cancelled)
+                throw new InvalidOperationException("Only sales in 'Created or Paid' status can be cancelled.");
 
             Status = SaleStatus.Cancelled;
             

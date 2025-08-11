@@ -1,15 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { SaleService } from '../../services/sale.service';
 import { UserService } from '../../services/user.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-list-sales',
-  templateUrl: './list-sales.component.html'
+  templateUrl: './list-sales.component.html',
+  styleUrls: ['./list-sales.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0', visibility: 'hidden' })),
+      state('expanded', style({ height: '*', visibility: 'visible' })),
+      transition('expanded <=> collapsed', animate('200ms ease-in-out')),
+    ])
+  ]
 })
 export class ListSalesComponent implements OnInit {
   sales: any[] = [];
   totalCount = 0;
   userName = '';
+
+  expandedRows: Set<string> = new Set();
+  saleDetails: { [key: string]: any[] } = {};
+  loadingDetails: { [key: string]: boolean } = {};
+
+  displayedColumns = ['number', 'customer', 'branch', 'subtotal', 'discount', 'total', 'status', 'createdAt', 'actions'];
+  allDisplayedColumns: string[] = [];
+
+  pageSize = 10;
+  pageNumber = 1;
 
   constructor(
     private saleService: SaleService,
@@ -17,13 +36,10 @@ export class ListSalesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userName = this.userService.userName; // Nome fixo do usuário
+    this.userName = this.userService.userName;
+    this.allDisplayedColumns = ['expand', ...this.displayedColumns];
     this.loadSales();
   }
-
-  displayedColumns = ['number', 'customer', 'branch', 'subtotal', 'discount', 'total', 'status', 'createdAt', 'actions'];
-  pageSize = 10;
-  pageNumber = 1;
 
   onPageChange(event: any) {
     this.pageNumber = event.pageIndex + 1;
@@ -32,7 +48,11 @@ export class ListSalesComponent implements OnInit {
   }
 
   getSubtotal(sale: any): number {
-    return sale.items.reduce((sum: number, item: any) => sum + item.subtotal, 0);
+    return sale.items.reduce(
+      (sum: number, item: any) =>
+        sum + (item.subtotal || (item.unitPrice * item.quantity)),
+      0
+    );
   }
 
   loadSales() {
@@ -56,7 +76,7 @@ export class ListSalesComponent implements OnInit {
     this.saleService.cancelSale(id).subscribe({
       next: (res) => {
         alert(res.message);
-        this.loadSales(); // Atualiza lista após cancelar
+        this.loadSales();
       },
       error: (err) => {
         console.error('Erro ao cancelar venda', err);
@@ -71,7 +91,7 @@ export class ListSalesComponent implements OnInit {
     this.saleService.paySale(id).subscribe({
       next: (res) => {
         alert(res.message);
-        this.loadSales(); // Atualiza lista após pagar
+        this.loadSales();
       },
       error: (err) => {
         console.error('Erro ao pagar venda', err);
@@ -80,4 +100,28 @@ export class ListSalesComponent implements OnInit {
     });
   }
 
+  toggleSaleDetails(saleId: string) {
+    if (this.expandedRows.has(saleId)) {
+      this.expandedRows.delete(saleId);
+    } else {
+      this.expandedRows.add(saleId);
+      if (!this.saleDetails[saleId]) {
+        this.loadingDetails[saleId] = true;
+        this.saleService.getSaleById(saleId).subscribe({
+          next: (data) => {
+            this.saleDetails[saleId] = data.items || [];
+            this.loadingDetails[saleId] = false;
+          },
+          error: (err) => {
+            console.error('Erro ao carregar detalhes da venda', err);
+            this.loadingDetails[saleId] = false;
+          }
+        });
+      }
+    }
+  }
+
+  isExpanded(saleId: string): boolean {
+    return this.expandedRows.has(saleId);
+  }
 }
